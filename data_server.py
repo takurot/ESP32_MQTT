@@ -6,8 +6,8 @@ import paho.mqtt.client as mqtt
 DB_NAME = 'sensors.db'
 
 # MQTTの設定
-BROKER_ADDRESS = 'your_mqtt_broker_address'
-TOPIC = 'your_topic'
+BROKER_ADDRESS = 'localhost'
+TOPIC = 'sensor_data'
 
 # SQLiteデータベースの初期化
 def init_db():
