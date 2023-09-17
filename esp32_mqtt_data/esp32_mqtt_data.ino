@@ -2,15 +2,15 @@
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
 
-const char* ssid = "your_SSID";
-const char* password = "your_PASSWORD";
+const char* ssid = "SSID";
+const char* password = "password";
 
 // MQTTブローカー情報
-const char* mqtt_server = "your_mqtt_broker_address";
+const char* mqtt_server = "192.168.0.100";
 // const int mqtt_port = 8883; //for TLS
 const int mqtt_port = 1883;
-const char* mqtt_user = "your_mqtt_user";
-const char* mqtt_password = "your_mqtt_password";
+// const char* mqtt_user = "lexxpluss";
+// const char* mqtt_password = "lexxpluss215";
 const char* topic = "sensor_data";
 
 // CA証明書
@@ -20,7 +20,8 @@ const char* topic = "sensor_data";
 // -----END CERTIFICATE-----
 // )EOF";
 
-WiFiClientSecure espClient;
+// WiFiClientSecure espClient;
+WiFiClient espClient;
 PubSubClient client(espClient);
 
 void setup() {
@@ -60,7 +61,7 @@ void loop() {
   // MQTTトピックにデータを送信
   client.publish(topic, jsonData);
 
-  delay(10000);  // 10秒ごとにデータを送信
+  delay(3000);  // 10秒ごとにデータを送信
 }
 
 void reconnect() {

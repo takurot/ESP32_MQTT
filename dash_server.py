@@ -9,7 +9,7 @@ app = dash.Dash(__name__)
 # レイアウト定義
 app.layout = html.Div([
     dcc.Graph(id='live-graph'),
-    dcc.Interval(id='graph-update', interval=1*1000),  # 1秒ごとに更新
+    dcc.Interval(id='graph-update', interval=3*1000),  # 1秒ごとに更新
 ])
 
 @app.callback(Output('live-graph', 'figure'),
@@ -19,18 +19,19 @@ def update_graph(n):
     cursor = conn.cursor()
 
     # データの読み込み
-    cursor.execute("SELECT timestamp, temperature, voltage FROM sensor_data ORDER BY timestamp DESC LIMIT 100")
+    cursor.execute("SELECT voltage, temperature FROM readings")
     data = cursor.fetchall()
 
-    timestamps = [row[0] for row in reversed(data)]
-    temperatures = [row[1] for row in reversed(data)]
-    voltages = [row[2] for row in reversed(data)]
+    temperatures = [row[0] for row in reversed(data)]
+    voltages = [row[1] for row in reversed(data)]
+    
+    # print(temperatures, voltages)
 
     conn.close()
 
     # プロットの更新
-    trace1 = go.Scatter(x=timestamps, y=temperatures, name='Temperature', mode='lines+markers')
-    trace2 = go.Scatter(x=timestamps, y=voltages, name='Voltage', mode='lines+markers')
+    trace1 = go.Scatter(y=temperatures, name='Temperature', mode='lines+markers')
+    trace2 = go.Scatter(y=voltages, name='Voltage', mode='lines+markers')
 
     return {'data': [trace1, trace2], 'layout': go.Layout(title='Sensor Data')}
 
