@@ -11,7 +11,7 @@ const char* mqtt_server = "your_mqtt_broker_address";
 const int mqtt_port = 1883;
 const char* mqtt_user = "your_mqtt_user";
 const char* mqtt_password = "your_mqtt_password";
-const char* topic = "your_topic";
+const char* topic = "sensor_data";
 
 // CA証明書
 // const char* ca_cert = R"EOF(
