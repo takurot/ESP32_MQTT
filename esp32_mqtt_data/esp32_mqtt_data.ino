@@ -9,8 +9,8 @@ const char* password = "password";
 const char* mqtt_server = "192.168.0.100";
 // const int mqtt_port = 8883; //for TLS
 const int mqtt_port = 1883;
-// const char* mqtt_user = "lexxpluss";
-// const char* mqtt_password = "lexxpluss215";
+// const char* mqtt_user = "user";
+// const char* mqtt_password = "pass";
 const char* topic = "sensor_data";
 
 // CA証明書
