@@ -7,17 +7,18 @@ const char* password = "your_PASSWORD";
 
 // MQTTブローカー情報
 const char* mqtt_server = "your_mqtt_broker_address";
-const int mqtt_port = 8883;
+// const int mqtt_port = 8883; //for TLS
+const int mqtt_port = 1883;
 const char* mqtt_user = "your_mqtt_user";
 const char* mqtt_password = "your_mqtt_password";
 const char* topic = "your_topic";
 
 // CA証明書
-const char* ca_cert = R"EOF(
------BEGIN CERTIFICATE-----
-...  // ここにca.crtの内容をペースト
------END CERTIFICATE-----
-)EOF";
+// const char* ca_cert = R"EOF(
+// -----BEGIN CERTIFICATE-----
+// ...  // ここにca.crtの内容をペースト
+// -----END CERTIFICATE-----
+// )EOF";
 
 WiFiClientSecure espClient;
 PubSubClient client(espClient);
@@ -34,7 +35,7 @@ void setup() {
   Serial.println("Connected to WiFi");
 
   // TLS設定
-  espClient.setCACert(ca_cert);
+  // espClient.setCACert(ca_cert);
 
   // MQTT設定
   client.setServer(mqtt_server, mqtt_port);
