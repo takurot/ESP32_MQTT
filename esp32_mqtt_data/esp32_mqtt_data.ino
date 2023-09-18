@@ -1,23 +1,22 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
+#include <WiFiClientSecure.h>
 
-const char* ssid = "SSID";
-const char* password = "password";
+const char* ssid = "WiFi SSDI";
+const char* password = "WiFi Password";
 
 // MQTTブローカー情報
-const char* mqtt_server = "192.168.0.100";
+const char* mqtt_server = "MQTT Broker IP Address";
 // const int mqtt_port = 8883; //for TLS
 const int mqtt_port = 1883;
-// const char* mqtt_user = "user";
-// const char* mqtt_password = "pass";
+const char* mqtt_user = "user_name_mosquitto";
+const char* mqtt_password = "password_mosquitto";
 const char* topic = "sensor_data";
 
 // CA証明書
 // const char* ca_cert = R"EOF(
-// -----BEGIN CERTIFICATE-----
-// ...  // ここにca.crtの内容をペースト
-// -----END CERTIFICATE-----
+// Insert CA Infor
 // )EOF";
 
 // WiFiClientSecure espClient;
@@ -53,6 +52,7 @@ void loop() {
 
   // JSON形式でデータを生成
   StaticJsonDocument<200> jsonDoc;
+  jsonDoc["time"] = millis();
   jsonDoc["temperature"] = temperature;
   jsonDoc["voltage"] = voltage;
   char jsonData[128];
@@ -71,7 +71,7 @@ void reconnect() {
       Serial.println("connected");
     } else {
       Serial.print("failed, rc=");
-      Serial.print(client.state());
+      Serial.println(client.state());
       delay(5000);
     }
   }
