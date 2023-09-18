@@ -16,6 +16,7 @@ def init_db():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS readings (
             id INTEGER PRIMARY KEY,
+            time LONG,
             voltage FLOAT,
             temperature FLOAT
         )
@@ -32,16 +33,17 @@ def on_message(client, userdata, msg):
     payload = msg.payload.decode('utf-8')
     data = json.loads(payload)
 
+    elapsed_time = data['time']
     voltage = data['voltage']
     temperature = data['temperature']
 
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO readings (voltage, temperature) VALUES (?, ?)", (voltage, temperature))
+    cursor.execute("INSERT INTO readings (time, voltage, temperature) VALUES (?, ?, ?)", (elapsed_time, voltage, temperature))
     conn.commit()
     conn.close()
 
-    print(f"Saved Data - Voltage: {voltage}, Temperature: {temperature}")
+    print(f"Saved Data - elapsed_time: {elapsed_time}, Voltage: {voltage}, Temperature: {temperature}")
 
 def main():
     init_db()

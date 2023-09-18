@@ -85,6 +85,7 @@ mosquitto_passwd -c /etc/mosquitto/passwd myuser
 ```conf
 allow_anonymous false
 password_file /etc/mosquitto/passwd
+listener 1883 0.0.0.0
 ```
 
 `allow_anonymous false`は、匿名の接続を禁止するための設定です。`password_file`は、ユーザー名とパスワードのペアが格納されているファイルへのパスを指定します。
@@ -101,7 +102,7 @@ sudo systemctl restart mosquitto
 
 セキュリティをさらに強化するためには、TLS/SSLを使用して接続を暗号化することも検討してください。
 
-# 証明書設定
+# 証明書設定（オプション）
 接続を暗号化するために、MosquittoでTLS/SSLを設定する手順を以下に示します。
 
 ### 1. 証明書と鍵の生成:

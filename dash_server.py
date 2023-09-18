@@ -19,19 +19,20 @@ def update_graph(n):
     cursor = conn.cursor()
 
     # データの読み込み
-    cursor.execute("SELECT voltage, temperature FROM readings")
+    cursor.execute("SELECT time, voltage, temperature FROM readings")
     data = cursor.fetchall()
 
-    temperatures = [row[0] for row in reversed(data)]
+    elapsed_time = [row[0] for row in reversed(data)]
     voltages = [row[1] for row in reversed(data)]
+    temperatures = [row[2] for row in reversed(data)]
     
     # print(temperatures, voltages)
 
     conn.close()
 
     # プロットの更新
-    trace1 = go.Scatter(y=temperatures, name='Temperature', mode='lines+markers')
-    trace2 = go.Scatter(y=voltages, name='Voltage', mode='lines+markers')
+    trace1 = go.Scatter(x=elapsed_time, y=temperatures, name='Temperature', mode='lines+markers')
+    trace2 = go.Scatter(x=elapsed_time, y=voltages, name='Voltage', mode='lines+markers')
 
     return {'data': [trace1, trace2], 'layout': go.Layout(title='Sensor Data')}
 
